@@ -1,0 +1,7 @@
+@media(max-width:560px) {
+  .filters input, .filters select, .ledger-sort select { font-size: 16px; }
+  .ledger-sort select { height: 44px; }
+  .pagination button { width: 44px; height: 44px; }
+  .category-row button { min-height: 44px; }
+  .method summary, .chart-data summary { min-height: 44px; }
+}

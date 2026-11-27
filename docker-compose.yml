@@ -1,0 +1,33 @@
+services:
+  app:
+    build: .
+    environment:
+      INTERNAL_HEALTH_HOSTS: app
+      DATABASE_URL: postgresql://spendscope:spendscope_local@postgres:5432/spendscope
+      PORT: 8012
+      HOST: 0.0.0.0
+      SEED_DEMO: "1"
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      GEMINI_MODEL: gemini-3.5-flash-lite
+    ports:
+      - "127.0.0.1:8012:8012"
+    depends_on:
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: spendscope
+      POSTGRES_USER: spendscope
+      POSTGRES_PASSWORD: spendscope_local
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - spendscope_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spendscope"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  spendscope_data:

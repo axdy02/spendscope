@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+data/spendscope-demo.json
+data/*.tmp
+*.log
+work/
